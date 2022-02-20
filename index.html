@@ -40,7 +40,18 @@
 
             }
 
-            function updateScene() { }
+            //function updateScene() { }
+
+function updateScene() {
+
+    if(!this.input.activePointer.isDown && isClicking == true) {
+        plane.y = this.input.activePointer.position.y;
+        isClicking = false;
+    } else if(this.input.activePointer.isDown && isClicking == false) {
+        isClicking = true;
+    }
+
+}
 
         </script>
     </body>
