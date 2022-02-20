@@ -64,8 +64,7 @@ function updateScene() {
                 swipeDirection = "down";
             }
         }
-
-    if(!this.input.activePointer.isDown && isClicking == true) {
+ 
         if(Math.abs(this.input.activePointer.upX - this.input.activePointer.downX) >= 50) {
             if(this.input.activePointer.upX < this.input.activePointer.downX) {
                 swipeDirection = "left";
