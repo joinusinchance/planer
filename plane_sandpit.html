@@ -64,10 +64,23 @@ function updateScene() {
                 swipeDirection = "down";
             }
         }
+
+    if(!this.input.activePointer.isDown && isClicking == true) {
+        if(Math.abs(this.input.activePointer.upX - this.input.activePointer.downX) >= 50) {
+            if(this.input.activePointer.upX < this.input.activePointer.downX) {
+                swipeDirection = "left";
+            } else if(this.input.activePointer.upY > this.input.activePointer.downY) {
+                swipeDirection = "right";
+            }
+        }
+
+
         isClicking = false;
     } else if(this.input.activePointer.isDown && isClicking == false) {
         isClicking = true;
     }
+
+// move based on swipeDirection
 
     if(swipeDirection == "down" && plane.y < 500) {
         if(Math.abs(plane.y - 500) <= 10) {
@@ -78,6 +91,20 @@ function updateScene() {
     } else if(swipeDirection == "up" && plane.y > 150) {
         if(Math.abs(plane.y - 150) <= 10) {
             plane.y = 150;
+        } else {
+            plane.y -= 8;
+        }
+    }
+
+if(swipeDirection == "right" && plane.x < 900) {
+        if(Math.abs(plane.x - 900) <= 10) {
+            plane.x = 900;
+        } else {
+            plane.x += 8;
+        }
+    } else if(swipeDirection == "left" && plane.x > 50) {
+        if(Math.abs(plane.x - 50) <= 10) {
+            plane.x = 50;
         } else {
             plane.y -= 8;
         }
