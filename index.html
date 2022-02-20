@@ -41,7 +41,7 @@
             }
 
             //function updateScene() { }
-
+/* option 1 direct
 function updateScene() {
 
     if(!this.input.activePointer.isDown && isClicking == true) {
@@ -52,7 +52,26 @@ function updateScene() {
     }
 
 }
+*/
 
+function updateScene() {
+
+    if(!this.input.activePointer.isDown && isClicking == true) {
+        plane.setData("positionY", this.input.activePointer.position.y);
+        isClicking = false;
+    } else if(this.input.activePointer.isDown && isClicking == false) {
+        isClicking = true;
+    }
+
+    if(Math.abs(plane.y - plane.getData("positionY")) <= 10) {
+        plane.y = plane.getData("positionY");
+    } else if(plane.y < plane.getData("positionY")) {
+        plane.y += 5;
+    } else if(plane.y > plane.getData("positionY")) {
+        plane.y -= 5;
+    }
+
+}
         </script>
     </body>
 </html>
