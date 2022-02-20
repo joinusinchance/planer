@@ -7,7 +7,7 @@
         <div id="game"></div>
         <script>
 // example from https://www.thepolyglotdeveloper.com/2020/09/include-touch-cursor-gesture-events-phaser-game/
-
+/*
             const phaserConfig = {
                 type: Phaser.AUTO,
                 parent: "game",
@@ -21,11 +21,90 @@
                     update: updateScene
                 }
             };
+  */          
 
+  //from  https://rexrainbow.github.io/phaser3-rex-notes/docs/site/game/#configuration
+
+            const phaserConfig = {
+                type: Phaser.AUTO,
+                parent: 'game',
+                // 750x1334
+                width: 750,
+                height: 1334,
+                scale: {
+                    mode: Phaser.Scale.FIT,
+                    autoCenter: Phaser.Scale.CENTER_BOTH
+                },
+                dom: {
+                    createContainer: false,
+                },
+                scene: null,
+                backgroundColor: 0x333333,
+                scene: {
+                    init: initScene,
+                    preload: preloadScene,
+                    create: createScene,
+                    update: updateScene
+                }            
+            }
+
+            /*
+            //const game = new Phaser.Game(phaserConfig);
+
+
+
+            const phaserConfig = {
+                // ...
+                parent: "game",
+
+                // Game size
+                width: 1024,
+                height: 768,
+
+                scale: {
+                    // Or set parent divId here
+                    parent: divId,
+
+                    mode: Phaser.Scale.FIT,
+                    autoCenter: Phaser.Scale.CENTER_BOTH,
+
+                    // Or put game size here
+                    // width: 1024,
+                    // height: 768,
+
+                    // Minimum size
+                    min: {
+                        width: 800,
+                        height: 600
+                    },
+                    // Or set minimum size like these
+                    // mixWidth: 800,
+                    // mixHeight: 600,
+
+                    // Maximum size
+                    max: {
+                        width: 1600,
+                        height: 1200
+                    }
+                    // Or set maximum size like these
+                    // maxWidth: 1600,
+                    // maxHeight: 1200,
+
+                    zoom: 1,  // Size of game canvas = game size * zoom
+                },
+                autoRound: false
+                // ...
+            };
+            */
             const game = new Phaser.Game(phaserConfig);
+
+            //var game = new Phaser.Game(config);
+
 
             var isClicking = false;
             var swipeDirection;
+            var touchAlpha = 0.5;
+            var touchAlphaChange = -0.1;
 
             function initScene() { }
 
@@ -35,23 +114,59 @@
 
             function createScene() {
 
+
+                // text example from https://phasergames.com/phaser-3-basics-images-text-and-click/
+                //var textConfig={fontSize:'20px',color:'#555555',fontFamily: 'Arial'};
+                var textConfig={fontSize:'20px',color:'#555555',font: '20px monospace'};
+                
+
+                // this.title=this.add.text(game.config.width/2,game.config.height*.75,"Hello Wordga!!!",textConfig);
+                
+                aText = this.add.text(game.config.width/2,game.config.height*.75,"Hello Wordga!!!",textConfig);
+                //setOrigin() replaces anchor.set()
+                //sprites now default to orign 0.5 for both x and y
+                //this.title.setOrigin(0.5,0.5);
+                aText.setOrigin(0.5,0.5);
+              
+                
+
+
                 plane = this.add.sprite(640, 360, "plane");
                 plane.setScale(0.4);
+
 
             }
 
             //function updateScene() { }
-/* option 1 direct */
-function updateScene() {
+            /* option 1 direct */
+            function updateScene() {
 
-    if(!this.input.activePointer.isDown && isClicking == true) {
-        plane.y = this.input.activePointer.position.y;
-        isClicking = false;
-    } else if(this.input.activePointer.isDown && isClicking == false) {
-        isClicking = true;
-    }
+                if(!this.input.activePointer.isDown && isClicking == true) {
+                    plane.x = this.input.activePointer.position.x;
+                    plane.y = this.input.activePointer.position.y;
+                    isClicking = false;
 
-}
+                    console.log("---Position---");
+                    console.log(this.input.activePointer.position.x);  
+                    console.log(this.input.activePointer.position.y);   
+
+                    plane.alpha = 1.0;
+
+
+                } else if(this.input.activePointer.isDown && isClicking == false) {
+                    isClicking = true;
+                }
+
+                if(plane.alpha<=0.1) {
+                    touchAlphaChange = 0.01;
+                } else if (plane.alpha>=0.9) {
+                    touchAlphaChange = -0.01;
+                }
+
+             plane.alpha += touchAlphaChange;
+             aText.alpha += (touchAlphaChange *-1);
+
+            }
 
         </script>
     </body>
