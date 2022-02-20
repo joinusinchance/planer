@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="//cdn.jsdelivr.net/npm/phaser@3.24.1/dist/phaser.min.js"></script>
+    </head>
+    <body>
+        <div id="game"></div>
+        <script>
+// example from https://www.thepolyglotdeveloper.com/2020/09/include-touch-cursor-gesture-events-phaser-game/
+
+            const phaserConfig = {
+                type: Phaser.AUTO,
+                parent: "game",
+                width: 1280,
+                height: 720,
+                backgroundColor: "#5DACD8",
+                scene: {
+                    init: initScene,
+                    preload: preloadScene,
+                    create: createScene,
+                    update: updateScene
+                }
+            };
+
+            const game = new Phaser.Game(phaserConfig);
+
+            var isClicking = false;
+            var swipeDirection;
+
+            function initScene() { }
+
+            function preloadScene() {
+                this.load.image("plane", "plane.png");
+            }
+
+            function createScene() {
+
+                plane = this.add.sprite(640, 360, "plane");
+                plane.setScale(0.4);
+
+            }
+
+            function updateScene() { }
+
+        </script>
+    </body>
+</html>
